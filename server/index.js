@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -5,8 +6,7 @@ const cors = require("cors");
 
 const EXPRESS_PORT = 3000;
 const WEB_SOCKET_PORT = 4000;
-const uri =
-  "mongodb+srv://haruki:test@cluster0.dqivi.mongodb.net/?retryWrites=true&w=majority";
+const uri = process.env.MONGO_URI;
 
 const { Server } = require("socket.io");
 const io = new Server({
