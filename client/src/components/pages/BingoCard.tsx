@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getBingoCardByUserId } from "../../clients/bingoCardsService";
+import { BingoCardState, getBingoCardState } from "../../utils/Utility";
 
 type RowProps = {
   rowIndex: number;
@@ -34,18 +35,25 @@ export default function BingoCard({
   className = "",
 }: BingoCardProps) {
   const [board, setBoard] = useState<number[][]>([]);
+  const bingoCardState: BingoCardState = useMemo(
+    () => getBingoCardState(board),
+    [board]
+  );
 
   useEffect(() => {
-    async function getBoard() {
+    const getBoard = async () => {
       const { data } = await getBingoCardByUserId(holder._id);
       setBoard(JSON.parse(data.board));
-    }
+    };
     getBoard();
   }, [updateCounter]);
 
   return (
     <div className="flex flex-col items-center">
-      <div className="mb-[8px] text-l font-bold">{holder.name}'s card</div>
+      <div className="mb-[8px] flex flex-row gap-[8px]">
+        <div className="text-l font-bold">{holder.name}'s card</div>
+        <BingoCardStateChip state={bingoCardState} />
+      </div>
       <div
         className={
           "grid grid-rows-5 grid-flow-col gap-[8px] p-[8px] w-[198px] h-[198px] bg-green-400 " +
@@ -55,6 +63,22 @@ export default function BingoCard({
         {board.map((row, rowIndex) => {
           return <Row row={row} rowIndex={rowIndex} />;
         })}
+      </div>
+    </div>
+  );
+}
+
+type BingoCardStateChipProps = {
+  state: BingoCardState;
+};
+
+function BingoCardStateChip({ state }: BingoCardStateChipProps) {
+  const bgColor = state === "reach" ? "bg-orange-500" : "bg-purple-500";
+  if (state === "normal") return <></>;
+  return (
+    <div className={"px-[8px] rounded-full " + bgColor}>
+      <div className="text-white font-semibold">
+        {state === "reach" ? "Reach" : "Won"}
       </div>
     </div>
   );

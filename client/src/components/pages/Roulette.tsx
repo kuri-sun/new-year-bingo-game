@@ -90,7 +90,6 @@ export default function Roulette({
     };
   }, []);
 
-  console.log("room data", room);
   return (
     <div className="w-full flex flex-row gap-[8px] border  overflow-y-auto">
       <div className="flex flex-col w-full items-center justify-center border">
