@@ -3,18 +3,25 @@ import { getBingoCardByUserId } from "../../clients/bingoCardsService";
 import { BingoCardState, getBingoCardState } from "../../utils/Utility";
 
 type RowProps = {
+  id: string;
   rowIndex: number;
   row: number[];
 };
 
-function Row({ row, rowIndex }: RowProps) {
+function Row({ id, row, rowIndex }: RowProps) {
   return (
     <div className="flex flex-row gap-[8px]">
       {row.map((cell, cellIndex) =>
         (rowIndex === 2 && cellIndex === 2) || cell === -1 ? (
-          <div className="flex flex-col items-center justify-center w-[30px] h-[30px] text-white bg-white rounded-full" />
+          <div
+            key={id + rowIndex + cellIndex}
+            className="flex flex-col items-center justify-center w-[30px] h-[30px] text-white bg-white rounded-full"
+          />
         ) : (
-          <div className="flex flex-col items-center justify-center w-[30px] h-[30px] text-white bg-gray-500 rounded-full">
+          <div
+            key={id + rowIndex + cellIndex}
+            className="flex flex-col items-center justify-center w-[30px] h-[30px] text-white bg-gray-500 rounded-full"
+          >
             {cell}
           </div>
         )
@@ -61,7 +68,14 @@ export default function BingoCard({
         }
       >
         {board.map((row, rowIndex) => {
-          return <Row row={row} rowIndex={rowIndex} />;
+          return (
+            <Row
+              key={holder._id + rowIndex.toString()}
+              id={holder._id}
+              row={row}
+              rowIndex={rowIndex}
+            />
+          );
         })}
       </div>
     </div>

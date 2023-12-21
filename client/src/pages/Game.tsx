@@ -1,9 +1,8 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useReducer, useState } from "react";
 import { getUsersByRoomId } from "../clients/usersService";
 import BingoCard from "../components/pages/BingoCard";
-import { getRoom } from "../clients/roomsService";
-import { Room } from "../models/Room";
+
 import Roulette from "../components/pages/Roulette";
 
 // Game page
@@ -11,7 +10,13 @@ export default function Game() {
   const { roomId } = useParams();
 
   const [players, setPlayers] = useState<User[]>([]);
-  const [updateCounter, setUpdateCounter] = useState(0);
+  const [updateCounter, forceUpdate] = useReducer((x) => x + 1, 0); // re-render
+
+  function notifyUIUpdate() {
+    setTimeout(() => {
+      forceUpdate();
+    }, 500);
+  }
 
   useEffect(() => {
     async function getPlayers() {
@@ -29,7 +34,7 @@ export default function Game() {
       <div className="w-full h-[calc(100%-264px)] flex flex-row">
         <Roulette
           updateCounter={updateCounter}
-          setUpdateCounter={setUpdateCounter}
+          notifyUIUpdate={notifyUIUpdate}
           roomId={roomId}
           players={players}
         />
@@ -39,7 +44,11 @@ export default function Game() {
           <div className="flex flex-row gap-[16px]">
             {players.map((player) => {
               return (
-                <BingoCard updateCounter={updateCounter} holder={player} />
+                <BingoCard
+                  key={player._id}
+                  updateCounter={updateCounter}
+                  holder={player}
+                />
               );
             })}
           </div>

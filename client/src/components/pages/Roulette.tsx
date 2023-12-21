@@ -13,14 +13,14 @@ import { LS_USER_KEY } from "../../utils/Constants";
 
 type RouletteProps = {
   updateCounter: number;
-  setUpdateCounter: Dispatch<SetStateAction<number>>;
+  notifyUIUpdate: () => void;
   roomId: string | undefined;
   players: User[];
 };
 
 export default function Roulette({
   updateCounter,
-  setUpdateCounter,
+  notifyUIUpdate,
   roomId,
   players,
 }: RouletteProps) {
@@ -45,10 +45,7 @@ export default function Roulette({
   }
   function onRoulette(data: any) {
     setRoulette(data.ranNum);
-    // update UI
-    setTimeout(() => {
-      setUpdateCounter(updateCounter + 1);
-    }, 1000);
+    notifyUIUpdate();
   }
   async function onExit() {
     if (confirm("Are you sure to exit this game?")) {
