@@ -114,3 +114,14 @@ function checkReachOrWin(
   if (filledCells.length === 5 && currentState !== "win") return "win";
   return currentState;
 }
+
+export function getBingoCardBgColor(state: BingoCardState): string {
+  switch (state) {
+    case "win":
+      return "bg-gray-400";
+    case "reach":
+      return "bg-orange-400";
+    case "normal":
+      return "bg-green-400";
+  }
+}

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../global/Button";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { socket } from "../../socket";
 import { getRoom } from "../../clients/roomsService";
 import { Room } from "../../models/Room";
@@ -27,6 +27,7 @@ export default function Roulette({
   const navigate = useNavigate();
 
   const [roulette, setRoulette] = useState(0);
+  const [isRouletteAnimation, setIsRouletteAnimation] = useState(false);
   const [room, setRoom] = useState<Room | null>(null);
 
   const currentPlayerName = getCurrentPlayer(players, room?.current)?.name;
@@ -44,8 +45,13 @@ export default function Roulette({
     });
   }
   function onRoulette(data: any) {
+    setIsRouletteAnimation(true);
     setRoulette(data.ranNum);
-    notifyUIUpdate();
+    // it takes 2s for the transition. ref:index.css
+    setTimeout(() => {
+      notifyUIUpdate();
+      setIsRouletteAnimation(false);
+    }, 2000);
   }
   async function onExit() {
     if (confirm("Are you sure to exit this game?")) {
@@ -89,8 +95,12 @@ export default function Roulette({
 
   return (
     <div className="w-full flex flex-row gap-[8px] border  overflow-y-auto">
-      <div className="flex flex-col w-full items-center justify-center border">
-        {roulette}
+      <div className="flex flex-col w-full items-center justify-center border bg-[url('/bg.png')]">
+        <div
+          className={"ball " + (isRouletteAnimation ? "ball-animation" : "")}
+        >
+          <p className="ball-number">{roulette.toString()}</p>
+        </div>
       </div>
       <div className="w-[300px] flex flex-col mt-[24px] ml-[24px] mr-[24px] gap-[24px]">
         <div className="flex flex-row items-center text-xl font-bold">

@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { getBingoCardByUserId } from "../../clients/bingoCardsService";
-import { BingoCardState, getBingoCardState } from "../../utils/Utility";
+import {
+  BingoCardState,
+  getBingoCardBgColor,
+  getBingoCardState,
+} from "../../utils/Utility";
 
 type RowProps = {
   id: string;
@@ -46,6 +50,7 @@ export default function BingoCard({
     () => getBingoCardState(board),
     [board]
   );
+  const bingoCardBgColor = getBingoCardBgColor(bingoCardState);
 
   useEffect(() => {
     const getBoard = async () => {
@@ -63,7 +68,9 @@ export default function BingoCard({
       </div>
       <div
         className={
-          "grid grid-rows-5 grid-flow-col gap-[8px] p-[8px] w-[198px] h-[198px] bg-green-400 " +
+          "grid grid-rows-5 grid-flow-col gap-[8px] p-[8px] w-[198px] h-[198px]  " +
+          bingoCardBgColor +
+          " " +
           className
         }
       >

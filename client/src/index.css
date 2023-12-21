@@ -1,3 +1,65 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ball {
+  display: block;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  background: red;
+  border-radius: 50%;
+  float: left;
+}
+
+.ball-number {
+  top: 30px;
+  left: 48px;
+  font-size: 80px;
+  font-weight: bold;
+  color: #fff;
+  position: absolute;
+}
+
+.ball-animation {
+  -webkit-animation: spin 2000ms linear infinite,
+    moveRightToLeft 2s linear infinite;
+  -moz-animation: spin 2000ms linear infinite,
+    moveRightToLeft 2s linear infinite;
+  -ms-animation: spin 2000ms linear infinite, moveRightToLeft 2s linear infinite;
+  animation: spin 2000ms linear infinite, moveRightToLeft 2s linear;
+
+  -webkit-transition: all 2s ease;
+  transition: all 2s ease;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes moveRightToLeft {
+  0% {
+    top: -50px;
+    left: 200px;
+  }
+  10% {
+    top: -40px;
+    left: 180px;
+  }
+  20% {
+    top: -25px;
+    left: 150px;
+  }
+  30% {
+    top: 0px;
+    left: 100px;
+  }
+  100% {
+    left: 0%;
+  }
+}

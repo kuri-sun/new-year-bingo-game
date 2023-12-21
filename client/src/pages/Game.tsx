@@ -13,9 +13,7 @@ export default function Game() {
   const [updateCounter, forceUpdate] = useReducer((x) => x + 1, 0); // re-render
 
   function notifyUIUpdate() {
-    setTimeout(() => {
-      forceUpdate();
-    }, 500);
+    forceUpdate();
   }
 
   useEffect(() => {
