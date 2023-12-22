@@ -6,10 +6,12 @@ import TextField from "../components/global/TextField";
 import { ValidateObject, isValidateRoomName } from "../utils/Utility";
 import { addRoom } from "../clients/roomsService";
 import { LS_USER_KEY } from "../utils/Constants";
+import { useTranslation } from "react-i18next";
 
 // AddRoom page
 export default function AddRoom() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [validateRoomName, setValidateRoomName] =
     useState<ValidateObject | null>(null);
@@ -30,8 +32,7 @@ export default function AddRoom() {
     } else {
       setValidateRoomName({
         isInvalid: true,
-        validateMessage:
-          "Room name is invalid format(You can not include any special chars or spaces).",
+        validateMessage: t("roomNameInvalidMessage"),
       });
     }
   }
@@ -43,7 +44,7 @@ export default function AddRoom() {
     } else {
       setValidatePlayers({
         isInvalid: true,
-        validateMessage: "Username can not be less than 2 chars.",
+        validateMessage: t("userNameInvalidMessage"),
       });
     }
   }
@@ -51,11 +52,11 @@ export default function AddRoom() {
   return (
     <div className="flex flex-col h-[calc(100%-48px)] items-center justify-center bg-[url('/onen1.jpg')] bg-cover">
       <Box
-        title="Let's create your room!"
+        title={t("addRoomTitle")}
         children={
           <div className="flex flex-col gap-[24px]">
             <div className="flex flex-col gap-[8px]">
-              <div className="font-semibold">Add member:</div>
+              <div className="font-semibold">{t("addMemberLabel")}:</div>
               <div className="flex flex-row items-center gap-[8px]">
                 <input
                   value={playerName}
@@ -88,7 +89,7 @@ export default function AddRoom() {
               </div>
             </div>
             <TextField
-              label="Room name: "
+              label={t("roomNameLabel") + ":"}
               onChange={(e) => {
                 setRoomName(e.target.value);
                 setValidateRoomName(null);
@@ -98,14 +99,14 @@ export default function AddRoom() {
             />
             <Button
               color="orange"
-              title={
-                "Create " + (roomName ? roomName + "'s" : "this") + " Room"
-              }
+              title={t("addRoomButton", {
+                who: roomName ? roomName + "'s" : "",
+              })}
               onClick={onAddRoom}
             />
             <Button
               color="gray"
-              title="Go back"
+              title={t("goBackButton")}
               onClick={() => navigate("/")}
             />
           </div>

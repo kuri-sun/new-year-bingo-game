@@ -5,6 +5,7 @@ import {
   getBingoCardBgColor,
   getBingoCardState,
 } from "../../utils/Utility";
+import { useTranslation } from "react-i18next";
 
 type RowProps = {
   id: string;
@@ -45,6 +46,7 @@ export default function BingoCard({
   updateCounter,
   className = "",
 }: BingoCardProps) {
+  const { t } = useTranslation();
   const [board, setBoard] = useState<number[][]>([]);
   const bingoCardState: BingoCardState = useMemo(
     () => getBingoCardState(board),
@@ -63,7 +65,9 @@ export default function BingoCard({
   return (
     <div className="flex flex-col items-center">
       <div className="mb-[8px] flex flex-row gap-[8px]">
-        <div className="text-l font-bold">{holder.name}'s card</div>
+        <div className="text-l font-bold">
+          {t("bingoCardHolderLabel", { who: holder.name })}
+        </div>
         <BingoCardStateChip state={bingoCardState} />
       </div>
       <div

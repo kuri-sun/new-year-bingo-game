@@ -9,10 +9,12 @@ import { getAllRooms } from "../clients/roomsService";
 import { Room } from "../models/Room";
 import { addUser } from "../clients/usersService";
 import { LS_USER_KEY } from "../utils/Constants";
+import { useTranslation } from "react-i18next";
 
 // SearchRoom page
 export default function SearchRoom() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [rooms, setRooms] = useState<OptionItem[]>([]);
   const [selecedRoom, setSelectedRoom] = useState<OptionItem | null>();
@@ -36,7 +38,7 @@ export default function SearchRoom() {
     if (username.length < 3) {
       setValidateUsername({
         isInvalid: true,
-        validateMessage: "You name is invalid.",
+        validateMessage: t("userNameInvalidMessage"),
       });
     }
     if (selecedRoom && !validateUsername?.isInvalid) {
@@ -50,11 +52,11 @@ export default function SearchRoom() {
   return (
     <div className="flex flex-col h-[calc(100%-48px)] items-center justify-center bg-[url('/osetsi.jpg')] bg-cover">
       <Box
-        title="Let's choose your room!"
+        title={t("searchRoomTitle")}
         children={
           <div className="flex flex-col gap-[24px]">
             <TextField
-              label="Your name: "
+              label={t("yourNameLabel") + ":"}
               onChange={(e) => {
                 if (e.target.value && e.target.value.length > 2) {
                   setUsername(e.target.value);
@@ -70,7 +72,7 @@ export default function SearchRoom() {
               invalidMessage={validateUsername?.validateMessage}
             />
             <Dropdown
-              label="Room list:"
+              label={t("roomListLabel") + ":"}
               optionItems={rooms}
               onChange={(e) => {
                 if (e.target.value) {
@@ -81,19 +83,19 @@ export default function SearchRoom() {
                 }
               }}
               invalid={!!!selecedRoom}
-              invalidMessage="You need to choose a room."
+              invalidMessage={t("roomSelectInvalidMessage")}
             />
             <Button
               color="green"
-              title={
-                "Enter " + (selecedRoom ? selecedRoom + "'s" : "a") + " Room"
-              }
+              title={t("enterRoomButton", {
+                who: selecedRoom ? selecedRoom.label : "",
+              })}
               onClick={onEnterRoom}
               disabled={!!!selecedRoom}
             />
             <Button
               color="gray"
-              title="Go back"
+              title={t("goBackButton")}
               onClick={() => navigate("/")}
             />
           </div>

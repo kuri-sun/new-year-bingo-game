@@ -10,6 +10,7 @@ import {
 } from "../../utils/Utility";
 import { deleteUser } from "../../clients/usersService";
 import { LS_USER_KEY } from "../../utils/Constants";
+import { useTranslation } from "react-i18next";
 
 type RouletteProps = {
   updateCounter: number;
@@ -25,6 +26,7 @@ export default function Roulette({
   players,
 }: RouletteProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [roulette, setRoulette] = useState(0);
   const [isRouletteAnimation, setIsRouletteAnimation] = useState(false);
@@ -104,13 +106,17 @@ export default function Roulette({
       </div>
       <div className="w-[300px] flex flex-col mt-[24px] ml-[24px] mr-[24px] gap-[24px]">
         <div className="flex flex-row items-center text-xl font-bold">
-          {currentPlayerName}'s turn!
+          {t("currentPlayerLabel", { who: currentPlayerName })}
         </div>
         {/* Roulette Buttons */}
         {isCurrentPlayerIsOurSession && (
-          <Button color="green" title="Roulette" onClick={onStartRoulette} />
+          <Button
+            color="green"
+            title={t("rouletteButton")}
+            onClick={onStartRoulette}
+          />
         )}
-        <Button color="red" title="Exit" onClick={onExit} />
+        <Button color="red" title={t("exitButton")} onClick={onExit} />
       </div>
     </div>
   );
