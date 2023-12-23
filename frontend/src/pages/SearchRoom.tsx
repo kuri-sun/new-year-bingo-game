@@ -9,7 +9,7 @@ import { getAllRooms } from "../clients/roomsService";
 import { Room } from "../models/Room";
 import { addUser } from "../clients/usersService";
 import { LS_USER_KEY } from "../utils/Constants";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "../../node_modules/react-i18next";
 
 // SearchRoom page
 export default function SearchRoom() {

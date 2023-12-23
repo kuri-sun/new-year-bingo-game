@@ -5,7 +5,7 @@ import {
   getBingoCardBgColor,
   getBingoCardState,
 } from "../../utils/Utility";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "../../../node_modules/react-i18next";
 
 type RowProps = {
   id: string;

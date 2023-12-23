@@ -6,7 +6,7 @@ import TextField from "../components/global/TextField";
 import { ValidateObject, isValidateRoomName } from "../utils/Utility";
 import { addRoom } from "../clients/roomsService";
 import { LS_USER_KEY } from "../utils/Constants";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "../../node_modules/react-i18next";
 
 // AddRoom page
 export default function AddRoom() {

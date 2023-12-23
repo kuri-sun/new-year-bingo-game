@@ -10,7 +10,7 @@ import {
 } from "../../utils/Utility";
 import { deleteUser } from "../../clients/usersService";
 import { LS_USER_KEY } from "../../utils/Constants";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "../../../node_modules/react-i18next";
 
 type RouletteProps = {
   updateCounter: number;
