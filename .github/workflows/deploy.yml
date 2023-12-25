@@ -13,10 +13,6 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Output Run Number
-        id: run-number
-        run: echo ${{ github.run_number }}
-
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
         with:
@@ -24,6 +20,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: test1
           environment_name: test1-env
-          version_label: ${{ steps.run-number.outputs }}
+          version_label: ${{ github.run_number }}
           region: us-east-1
           deployment_package: docker-compose.yml
