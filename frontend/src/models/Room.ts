@@ -1,6 +1,6 @@
 export type Room = {
   _id: string;
   name: string;
-  cunsumedNums?: number[];
+  consumedNums?: number[];
   current?: string;
 };
