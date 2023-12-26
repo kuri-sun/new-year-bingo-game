@@ -24,7 +24,7 @@ function setUpSocketEvents(io) {
 
       // generate the random nubmer.
       let room = await getRoom(roomId);
-      let ranNum = generateRandNum(room.cunsumedNums);
+      let ranNum = generateRandNum(room.consumedNums);
 
       // update each user's bingo card
       players.forEach(async (player) => {
@@ -39,7 +39,7 @@ function setUpSocketEvents(io) {
         [...players],
         room.current.toString()
       );
-      await updateRoomCurrent(room._id, nextTurnUser._id);
+      await updateRoomCurrent(room._id, nextTurnUser._id, ranNum);
 
       io.in(roomId).emit("roulette", { ranNum, nextTurn: nextTurnUser._id });
     });

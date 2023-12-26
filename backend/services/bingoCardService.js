@@ -18,14 +18,14 @@ async function addBingoCard(userId) {
 async function updateBignoCard(id, newBoard) {
   let foundCard = await BingoCard.findById(id);
   foundCard.board = newBoard;
-  foundCard.save();
+  await foundCard.save();
   return foundCard;
 }
 
 async function refreshBignoCard(id) {
   let foundCard = await BingoCard.findById(id);
   foundCard.board = JSON.stringify(generateNewBoard());
-  foundCard.save();
+  await foundCard.save();
   return foundCard;
 }
 
