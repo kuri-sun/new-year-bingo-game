@@ -18,4 +18,5 @@ services:
     container_name: new-year-bingo-game-backend-container
     restart: always
     environment:
-      MONGO_URI: ${{ secrets.MONGO_URI }}
+      # TODO: When you develop change this one to yours.
+      MONGO_URI: mongodb+srv://haruki:test@cluster0.dqivi.mongodb.net/?retryWrites=true&w=majority
