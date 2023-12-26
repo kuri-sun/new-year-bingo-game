@@ -18,4 +18,5 @@ services:
     container_name: new-year-bingo-game-backend-container
     restart: always
     environment:
+      # Dont expose this
       MONGO_URI: mongodb+srv://haruki:test@cluster0.dqivi.mongodb.net/?retryWrites=true&w=majority
