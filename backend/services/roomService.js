@@ -15,7 +15,7 @@ async function addRoom(name, players) {
   // create a new room.
   let newRoom = await Room.create({
     name: name,
-    cunsumedNums: [],
+    consumedNums: [],
   });
   const roomId = newRoom._id.toString();
   // put players into the room.
@@ -36,10 +36,11 @@ async function addUsers(players, users, roomId) {
   await addUsers(players, users, roomId);
 }
 
-async function updateRoomCurrent(id, newCurrentUserId) {
+async function updateRoomCurrent(id, newCurrentUserId, consumedNum) {
   let room = await Room.findById(id);
   room.current = newCurrentUserId;
-  room.save();
+  room.consumedNums.push(consumedNum);
+  await room.save();
   return room;
 }
 
