@@ -78,9 +78,12 @@ export default function AddRoom() {
               </div>
               {/* Tips */}
               <div className="flex flex-row flex-wrap gap-[4px]">
-                {players.map((person) => {
+                {players.map((person, i) => {
                   return (
-                    <div className="flex flex-row items-center px-[8px] py-[4px] gap-[8px] rounded bg-green-500 text-white text-l">
+                    <div
+                      key={person + i}
+                      className="flex flex-row items-center px-[8px] py-[4px] gap-[8px] rounded bg-green-500 text-white text-l"
+                    >
                       <div className="">{person}</div>
                       <div className="font-bold cursor-pointer">x</div>
                     </div>

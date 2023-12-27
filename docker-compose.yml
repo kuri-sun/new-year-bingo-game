@@ -5,10 +5,8 @@ services:
     image: s0517019/new-year-bingo-game-frontend # Your docker image
     ports: # Port binding to host from docker container
       - "80:8080" # Bind port 8080 of host to 8080 of container
-    container_name: new-year-bingo-game-frontend-container
+    container_name: frontend
     restart: always # What to do if container crashes
-    networks:
-      - mynetwork
     depends_on:
       - backend
 
@@ -18,13 +16,7 @@ services:
     ports:
       - "3000:3000" # Bind port 3000 of host to 3000 of container
       - "4000:4000" # Bind port 4000 of host to 4000 of container
-    container_name: new-year-bingo-game-backend-container
+    container_name: backend
     restart: always
     environment:
-      # TODO: When you develop change this one to yours.
       MONGO_URI: mongodb+srv://haruki:test@cluster0.dqivi.mongodb.net/?retryWrites=true&w=majority
-    networks:
-      - mynetwork
-
-networks:
-  mynetwork:
