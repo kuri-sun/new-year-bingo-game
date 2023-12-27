@@ -5,7 +5,6 @@ import NotFound from "./pages/NotFound";
 import Game from "./pages/Game";
 import AddRoom from "./pages/AddRoom";
 import SearchRoom from "./pages/SearchRoom";
-import Sockettest from "./pages/Sockettest";
 
 function App() {
   return (
@@ -15,7 +14,6 @@ function App() {
         <Routes>
           <Route>
             <Route path="/" element={<Landing />} />
-            <Route path="/socket" element={<Sockettest />} />
             <Route path="/add-room" element={<AddRoom />} />
             <Route path="/search-room" element={<SearchRoom />} />
             <Route path="/game/:roomId" element={<Game />} />

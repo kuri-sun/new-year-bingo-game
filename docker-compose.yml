@@ -9,7 +9,7 @@ services:
     restart: always # What to do if container crashes
     networks:
       - mynetwork
-    links:
+    depends_on:
       - backend
 
   # Create backend container
