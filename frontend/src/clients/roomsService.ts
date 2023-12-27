@@ -1,6 +1,5 @@
 import axios from "axios";
-
-export const API_URL = "http://localhost:3000";
+import { API_URL } from "../utils/Constants";
 
 export async function getAllRooms() {
   return axios.get(API_URL + "/rooms/");

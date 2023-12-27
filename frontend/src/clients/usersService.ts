@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "./roomsService";
+import { API_URL } from "../utils/Constants";
 
 export async function getUsersByRoomId(roomId: string) {
   return axios.get(API_URL + "/users/room/" + roomId);

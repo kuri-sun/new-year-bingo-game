@@ -7,8 +7,11 @@ services:
       - "80:8080" # Bind port 8080 of host to 8080 of container
     container_name: new-year-bingo-game-frontend-container
     restart: always # What to do if container crashes
+    networks:
+      - mynetwork
     links:
       - backend
+
   # Create backend container
   backend:
     image: s0517019/new-year-bingo-game-backend # Your docker image
@@ -20,3 +23,8 @@ services:
     environment:
       # TODO: When you develop change this one to yours.
       MONGO_URI: mongodb+srv://haruki:test@cluster0.dqivi.mongodb.net/?retryWrites=true&w=majority
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
