@@ -1,19 +1,21 @@
 require("dotenv").config();
 const express = require("express");
-const mongoose = require("mongoose");
 const app = express();
+const http = require("http");
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+const mongoose = require("mongoose");
 const cors = require("cors");
 
 const EXPRESS_PORT = 3000;
 const WEB_SOCKET_PORT = 4000;
 const uri = process.env.MONGO_URI;
-
-const { Server } = require("socket.io");
-const io = new Server({
-  cors: {
-    origin: "*",
-  },
-});
 
 // connecting with mongo db with mongoose, this will connect your server with mongo database
 mongoose
