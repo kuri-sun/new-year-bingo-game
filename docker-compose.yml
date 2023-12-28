@@ -7,6 +7,8 @@ services:
       - "80:8080" # Bind port 8080 of host to 8080 of container
     container_name: frontend
     restart: always # What to do if container crashes
+    networks:
+      - mynetwork
     depends_on:
       - backend
 
@@ -20,3 +22,9 @@ services:
     restart: always
     environment:
       MONGO_URI: mongodb+srv://haruki:test@cluster0.dqivi.mongodb.net/?retryWrites=true&w=majority
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
