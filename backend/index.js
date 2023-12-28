@@ -24,7 +24,7 @@ mongoose
   .catch((err) => console.error("err: ", err));
 
 // middlewares
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 // routes
