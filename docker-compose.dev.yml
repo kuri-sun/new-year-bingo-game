@@ -2,11 +2,14 @@ version: "3"
 services:
   # Create frontend container
   frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     image: s0517019/new-year-bingo-game-frontend # Your docker image
     ports:
-      - "80:8080" 
+      - "80:8080" # Bind port 8080 of host to 8080 of container
     container_name: frontend
-    restart: always 
+    restart: always # What to do if container crashes
     networks:
       - mynetwork
     depends_on:
@@ -14,10 +17,13 @@ services:
 
   # Create backend container
   backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     image: s0517019/new-year-bingo-game-backend # Your docker image
     ports:
-      - "3000:3000"
-      - "4000:4000"
+      - "3000:3000" # Bind port 3000 of host to 3000 of container
+      - "4000:4000" # Bind port 4000 of host to 4000 of container
     container_name: backend
     restart: always
     environment:
