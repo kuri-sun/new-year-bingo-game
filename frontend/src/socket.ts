@@ -1,6 +1,4 @@
 import { io } from "socket.io-client";
+import { WEB_SOCKET_API_URL } from "./utils/Constants";
 
-// "undefined" means the URL will be computed from the `window.location` object
-const URL = "http://localhost:4000";
-
-export const socket = io(URL);
+export const socket = io(WEB_SOCKET_API_URL);
