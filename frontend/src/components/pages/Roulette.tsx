@@ -8,20 +8,21 @@ import {
   getCurrentPlayer,
   isSessionUsersIncludeCurrentUser,
 } from "../../utils/Utility";
-import { deleteUser } from "../../clients/usersService";
 import { LS_USER_KEY } from "../../utils/Constants";
 import { useTranslation } from "../../../node_modules/react-i18next";
 
 type RouletteProps = {
   updateCounter: number;
-  notifyUIUpdate: () => void;
+  notifyUIUpdateForBingo: () => void;
+  notifyUIUpdateForPlayers: () => void;
   roomId: string | undefined;
   players: User[];
 };
 
 export default function Roulette({
   updateCounter,
-  notifyUIUpdate,
+  notifyUIUpdateForBingo,
+  notifyUIUpdateForPlayers,
   roomId,
   players,
 }: RouletteProps) {
@@ -36,7 +37,6 @@ export default function Roulette({
   const isCurrentPlayerIsOurSession = isSessionUsersIncludeCurrentUser(
     room?.current
   );
-  console.log("see the current", room?.current);
 
   function onConnect() {}
   function onDisconnect() {}
@@ -48,13 +48,21 @@ export default function Roulette({
     });
   }
 
-  // After someone started the roulette, this is going to be invoked.
-  function onRouletteStarted(data: any) {
+  // After someone started enters the room
+  function onSomeoneEnterRoom() {
+    console.log("someone enters a room");
+    setTimeout(() => {
+      notifyUIUpdateForPlayers();
+    }, 500);
+  }
+
+  // After someone started the roulette
+  function onSomeoneRouletteStarted(data: any) {
     setIsRouletteAnimation(true);
     setRoulette(data.ranNum);
     // it takes 2s for the transition. ref:index.css
     setTimeout(() => {
-      notifyUIUpdate();
+      notifyUIUpdateForBingo();
       setIsRouletteAnimation(false);
     }, 2000);
   }
@@ -85,15 +93,17 @@ export default function Roulette({
   useEffect(() => {
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("roulette", onRouletteStarted);
+    socket.on("roulette", onSomeoneRouletteStarted);
+    socket.on("enter", onSomeoneEnterRoom);
+    socket.emit("enter", {
+      roomId,
+    });
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.emit("enter", {
-        roomId,
-      });
-      socket.off("roulette", onRouletteStarted);
+      socket.off("roulette", onSomeoneRouletteStarted);
+      socket.off("enter", onSomeoneEnterRoom);
     };
   }, []);
 

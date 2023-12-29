@@ -21,6 +21,7 @@ function setUpSocketEvents(io) {
       console.log(
         `⚡: ${socket.id} user just enter to the room whose id is: ${roomId}!`
       );
+      io.in(roomId).emit("enter", {});
     });
 
     // spin the roulette

@@ -10,10 +10,17 @@ export default function Game() {
   const { roomId } = useParams();
 
   const [players, setPlayers] = useState<User[]>([]);
-  const [updateCounter, forceUpdate] = useReducer((x) => x + 1, 0); // re-render
+  const [bingoUpdateCounter, bingoForceUpdate] = useReducer((x) => x + 1, 0); // re-render
+  const [playersUpdateCounter, playersForceUpdate] = useReducer(
+    (x) => x + 1,
+    0
+  ); // re-render
 
-  function notifyUIUpdate() {
-    forceUpdate();
+  function notifyUIUpdateForPlayers() {
+    playersForceUpdate();
+  }
+  function notifyUIUpdateForBingo() {
+    bingoForceUpdate();
   }
 
   useEffect(() => {
@@ -24,15 +31,16 @@ export default function Game() {
     if (roomId) {
       getPlayers();
     }
-  }, [roomId]);
+  }, [roomId, playersUpdateCounter]);
 
   if (players.length === 0) return <div>No...</div>;
   return (
     <div className="w-full h-[calc(100%-48px)] flex flex-col items-center justify-between bg-[url('/')] bg-cover">
       <div className="w-full h-[calc(100%-264px)] flex flex-row">
         <Roulette
-          updateCounter={updateCounter}
-          notifyUIUpdate={notifyUIUpdate}
+          updateCounter={bingoUpdateCounter}
+          notifyUIUpdateForBingo={notifyUIUpdateForBingo}
+          notifyUIUpdateForPlayers={notifyUIUpdateForPlayers}
           roomId={roomId}
           players={players}
         />
@@ -44,7 +52,7 @@ export default function Game() {
               return (
                 <BingoCard
                   key={player._id}
-                  updateCounter={updateCounter}
+                  updateCounter={bingoUpdateCounter}
                   holder={player}
                 />
               );
