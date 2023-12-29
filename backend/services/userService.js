@@ -28,9 +28,19 @@ async function deleteUser(id) {
   return "success";
 }
 
+async function deleteUsers(ids) {
+  await User.deleteMany({
+    _id: {
+      $in: ids,
+    },
+  });
+  return "success";
+}
+
 module.exports = {
   getUser,
   getUsersByRoomId,
   addUser,
   deleteUser,
+  deleteUsers,
 };

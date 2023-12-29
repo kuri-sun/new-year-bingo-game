@@ -36,17 +36,20 @@ export default function Roulette({
   const isCurrentPlayerIsOurSession = isSessionUsersIncludeCurrentUser(
     room?.current
   );
+  console.log("see the current", room?.current);
 
   function onConnect() {}
   function onDisconnect() {}
 
+  // After "you" started the roulette
   function onStartRoulette() {
     socket.emit("roulette", {
       roomId,
-      players,
     });
   }
-  function onRoulette(data: any) {
+
+  // After someone started the roulette, this is going to be invoked.
+  function onRouletteStarted(data: any) {
     setIsRouletteAnimation(true);
     setRoulette(data.ranNum);
     // it takes 2s for the transition. ref:index.css
@@ -55,14 +58,14 @@ export default function Roulette({
       setIsRouletteAnimation(false);
     }, 2000);
   }
-  async function onExit() {
+
+  // When user decide to disconnect
+  function onExit() {
     if (confirm("Are you sure to exit this game?")) {
       const sessionUsersString = localStorage.getItem(LS_USER_KEY);
       if (sessionUsersString) {
         const sessionUsers = JSON.parse(sessionUsersString) as User[];
-        sessionUsers.forEach(async (user) => {
-          await deleteUser(user._id);
-        });
+        socket.emit("exitRoom", { sessionUsers, roomId });
       }
       localStorage.removeItem(LS_USER_KEY);
       navigate("/");
@@ -82,16 +85,15 @@ export default function Roulette({
   useEffect(() => {
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("roulette", onRoulette);
+    socket.on("roulette", onRouletteStarted);
 
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.off("roulette", onRoulette);
-
       socket.emit("enter", {
         roomId,
       });
+      socket.off("roulette", onRouletteStarted);
     };
   }, []);
 

@@ -44,6 +44,14 @@ async function updateRoomCurrent(id, newCurrentUserId, consumedNum) {
   return room;
 }
 
+async function updateRoomAndResetConsumedNum(id, newCurrentUserId) {
+  let room = await Room.findById(id);
+  room.current = newCurrentUserId;
+  room.consumedNums = [];
+  await room.save();
+  return room;
+}
+
 async function deleteRoom(id) {
   await Room.findByIdAndDelete(id);
 }
@@ -53,5 +61,6 @@ module.exports = {
   getRoom,
   addRoom,
   updateRoomCurrent,
+  updateRoomAndResetConsumedNum,
   deleteRoom,
 };

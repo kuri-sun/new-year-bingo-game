@@ -32,7 +32,7 @@ router.post("/", async function (req, res, next) {
   }
 });
 
-// Delete a room
+// Delete a user
 router.delete("/:id", async function (req, res, next) {
   try {
     await deleteUser(req.params.id);

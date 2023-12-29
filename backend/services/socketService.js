@@ -4,8 +4,13 @@ const {
   returnNextTurnUser,
 } = require("../utils/util");
 const { updateBignoCard, getBignoCardByUserId } = require("./bingoCardService");
-const { getRoom, updateRoomCurrent } = require("./roomService");
-const { getUsersByRoomId } = require("./userService");
+const {
+  getRoom,
+  updateRoomCurrent,
+  deleteRoom,
+  updateRoomAndResetConsumedNum,
+} = require("./roomService");
+const { getUsersByRoomId, deleteUsers } = require("./userService");
 
 function setUpSocketEvents(io) {
   io.on("connection", (socket) => {
@@ -45,6 +50,36 @@ function setUpSocketEvents(io) {
       await updateRoomCurrent(room._id, nextTurnUser._id, ranNum);
 
       io.in(roomId).emit("roulette", { ranNum, nextTurn: nextTurnUser._id });
+    });
+
+    socket.on("exitRoom", async (data) => {
+      // connected users and the room
+      let sessionUsers = data.sessionUsers;
+      let roomId = data.roomId;
+
+      // get the room
+      let room = await getRoom(roomId);
+
+      // bulk delete users that were connected.
+      let ids = sessionUsers.map((u) => u._id);
+      await deleteUsers(ids);
+
+      // check there is users in the room.
+      let users = await getUsersByRoomId(room._id);
+      if (users.length > 0) {
+        // update the turn.
+        const nextTurnUser = returnNextTurnUser(
+          [...users],
+          room.current.toString()
+        );
+        await updateRoomAndResetConsumedNum(room._id, nextTurnUser._id);
+      } else {
+        // remove the room
+        await deleteRoom(room._id);
+        console.log("Deleted the room, no one is in there.");
+      }
+
+      console.log("A user exit the room");
     });
 
     socket.on("disconnect", () => {
