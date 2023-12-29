@@ -5,6 +5,7 @@ const {
 } = require("../utils/util");
 const { updateBignoCard, getBignoCardByUserId } = require("./bingoCardService");
 const { getRoom, updateRoomCurrent } = require("./roomService");
+const { getUsersByRoomId } = require("./userService");
 
 function setUpSocketEvents(io) {
   io.on("connection", (socket) => {
@@ -20,7 +21,9 @@ function setUpSocketEvents(io) {
     // spin the roulette
     socket.on("roulette", async (data) => {
       let roomId = data.roomId;
-      let players = data.players;
+
+      // Get the players in the room.
+      let players = getUsersByRoomId(roomId);
 
       // generate the random nubmer.
       let room = await getRoom(roomId);
