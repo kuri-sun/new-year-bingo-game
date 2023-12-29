@@ -23,7 +23,7 @@ function setUpSocketEvents(io) {
       let roomId = data.roomId;
 
       // Get the players in the room.
-      let players = getUsersByRoomId(roomId);
+      let players = await getUsersByRoomId(roomId);
 
       // generate the random nubmer.
       let room = await getRoom(roomId);
