@@ -27,7 +27,7 @@ services:
     container_name: backend
     restart: always
     environment:
-      MONGO_URI: mongodb+srv://haruki:test@cluster0.dqivi.mongodb.net/?retryWrites=true&w=majority
+      MONGO_URI: "{{ MONGO_URI }}"
     networks:
       - mynetwork
 
