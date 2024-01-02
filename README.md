@@ -17,7 +17,8 @@ https://github.com/kuri-sun/new-year-bingo-game/assets/62743644/3194dacc-cd13-42
 
 ```bash
 
-# Docker - Make sure that you are in the root folder.
+# Docker
+# Go to the root folder.
 docker-compose -f docker-compose.dev.yml up --build -d
 
 # NPM
