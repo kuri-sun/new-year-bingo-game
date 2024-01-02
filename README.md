@@ -6,6 +6,7 @@ The front-end React app builds the connection with the back-end Node application
 https://github.com/kuri-sun/new-year-bingo-game/assets/62743644/3194dacc-cd13-4208-868e-4d7ce5da2d6a
 
 ## Architecture
+![Untitled Diagram drawio](https://github.com/kuri-sun/new-year-bingo-game/assets/62743644/f39da390-78a5-436e-93d8-87461f03d01c)
 
 ## Development
 
