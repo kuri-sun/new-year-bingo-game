@@ -1,4 +1,4 @@
-# Happy New Year's BINGO game(with your family in the distance).
+# Happy New Year's BINGO game (with your family in the distance)
 
 The front-end React app builds the connection with the back-end Node application through HTTP and WebSocket. Live bingo game experience even if your family is in Japan while you are in Canada.
 
