@@ -13,10 +13,7 @@ https://github.com/kuri-sun/new-year-bingo-game/assets/62743644/3194dacc-cd13-42
 
 ## Development
 
-1. Pick up some issues from [here](https://github.com/kuri-sun/new-year-bingo-game/issues).
-2. Create your branch to work on the issue.
-3. Put the following commands in your terminal to start the development!
-4. Push your branch in the remote and Create your PR.
+Put the following commands in your terminal to start the development!
 
 ```bash
 
